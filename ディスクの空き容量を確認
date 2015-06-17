@@ -1,1 +1,11 @@
+dfコマンドでディスクの空き容量を確認する。
+また、デバイスがちゃんとマウントされているかもこれでわかる。
+-h をつけるとG,Mなどの単位がついて見やすくなる。
+
+# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/xvda1       20G  1.3G   19G   7% /
+devtmpfs        490M   56K  490M   1% /dev
+tmpfs           499M     0  499M   0% /dev/shm
+
 
