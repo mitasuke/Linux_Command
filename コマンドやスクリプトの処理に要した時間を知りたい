@@ -1,0 +1,30 @@
+timeコマンドを使う。
+
+# time 実行するコマンド
+
+例：
+# time ls -la
+total 52
+drwx------ 5 ec2-user ec2-user 4096 Jun 20 15:30 .
+drwxr-xr-x 4 root     root     4096 Jun 20 15:28 ..
+-rw------- 1 ec2-user ec2-user 2129 Jun 20 16:15 .bash_history
+-rw-r--r-- 1 ec2-user ec2-user   18 Mar  4 05:16 .bash_logout
+-rw-r--r-- 1 ec2-user ec2-user  176 Mar  4 05:16 .bash_profile
+-rw-r--r-- 1 ec2-user ec2-user  124 Mar  4 05:16 .bashrc
+-rw-r--r-- 1 root     root      698 Jun 16 13:30 log.txt
+-rw------- 1 ec2-user ec2-user   58 Jun  2 15:44 .mysql_history
+drwx------ 2 ec2-user ec2-user 4096 May 30 19:06 .ssh
+-rw-r--r-- 1 root     root     1937 Jun 16 15:45 table.txt
+drwxr-xr-x 2 root     root     4096 Jun 20 11:09 test
+-rw-r--r-- 1 root     root       78 Jun 15 14:54 test.csv
+
+real    0m0.002s
+user    0m0.000s
+sys     0m0.000s
+
+real・・・プログラムの呼び出しから終了までにかかった実時間（秒）
+user・・・プログラム自体の処理時間（秒）（ユーザCPU時間）
+sys・・・プログラムを処理するために、OSが処理をした時間（秒）（システム時間）
+
+参考先：http://qiita.com/tossh0095/items/659e5934e52b38183200
+
