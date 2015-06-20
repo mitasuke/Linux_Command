@@ -1,1 +1,24 @@
+● /etc/redhat-release を見る。
+
+# cat /etc/redhat-release
+CentOS release 6.6 (Final)
+
+● lsb_release -a コマンドを使う。　コマンドは別途インストールが必要かもしれない。
+
+# lsb_release -a
+LSB Version:	:base-4.0-ia32:base-4.0-noarch:core-4.0-ia32:core-4.0-noarch:graphics-4.0-ia32:graphics-4.0-noarch:printing-4.0-ia32:printing-4.0-noarch
+Distributor ID:	CentOS
+Description:	CentOS release 6.6 (Final)
+Release:	6.6
+Codename:	Final
+
+● /etc/issue ファイルを見る。
+
+# cat /etc/issue
+CentOS release 6.6 (Final)
+Kernel \r on an \m
+
+● uname -a コマンドで見る。
+# uname -a
+Linux ansible-setup 2.6.32-504.16.2.el6.i686 #1 SMP Wed Apr 22 04:04:03 UTC 2015 i686 i686 i386 GNU/Linux
 
