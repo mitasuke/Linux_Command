@@ -1,1 +1,19 @@
+インストールされているパッケージを全て表示する。
+rpm -qa
+
+rpm -qa だと表示量が多すぎるので、基本的には grep で絞る。
+$ rpm -qa | grep http
+httpd-tools-2.2.29-1.5.amzn1.x86_64
+httpd-2.2.29-1.5.amzn1.x86_64
+
+パッケージがインストールされた年月日時を知りたい時はこれ。
+こちらも、grepで絞って使うのが普通かと。
+$ rpm -qa --last
+redhat-lsb-printing-4.0-7.14.amzn1.x86_64     Sat 20 Jun 2015 12:33:18 PM UTC
+redhat-lsb-compat-4.0-7.14.amzn1.x86_64       Sat 20 Jun 2015 12:33:18 PM UTC
+redhat-lsb-4.0-7.14.amzn1.x86_64              Sat 20 Jun 2015 12:33:18 PM UTC
+～～省略～～
+fontpackages-filesystem-1.41-1.1.2.amzn1.noarch Wed 18 Mar 2015 03:29:33 PM UTC
+filesystem-2.4.30-3.8.amzn1.x86_64            Wed 18 Mar 2015 03:29:33 PM UTC
+basesystem-10.0-4.9.amzn1.noarch              Wed 18 Mar 2015 03:29:33 PM UTC
 
