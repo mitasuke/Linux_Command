@@ -1,1 +1,29 @@
+会社の人からの情報提供
+
+今いるディレクトリ配下にある各ディレクトリにあるファイル数を表示させる。
+多くのディレクトリ配下のファイル数をすぐに知りたい場合に便利かも。
+
+# for d in `ls`; do if [ -d $d ]; then echo -n "${d} : "; find ${d} -type f | wc -l; fi done
+bin : 89
+boot : 20
+dev : 142
+ebs : 0
+etc : 501
+home : 15
+lib : 1551
+lib64 : 279
+local : 0
+lost+found : 0
+media : 0
+mnt : 0
+opt : 783
+root : 9
+run : 0
+sbin : 162
+selinux : 0
+srv : 0
+sys : 6598
+tmp : 6
+usr : 42891
+var : 1652
 
