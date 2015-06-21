@@ -1,1 +1,14 @@
+以下のファイルに設定する。
+# vi /etc/sysconfig/network
+-----------------------------
+NETWORKING=yes
+HOSTNAME=server-name　　★HOSTNAME= の後にホスト名を記載する
+-----------------------------
+
+サーバ再起動（shutdown -r now）かネットワーク再起動（/etc/init.d/network restart）で反映される。
+
+ちゃんと反映されているか確認する。
+# uname -n
+server-name
+
 
