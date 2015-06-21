@@ -1,4 +1,6 @@
-ifconfigコマンドを使うのが楽。（コマンドが見つからなかったら /sbin/ifconfig をやってみる）
+ifconfigコマンドを使うのが楽。
+「ifconfig: command not found」とか表示されたら、/sbin/ifconfig をやってみる。
+
 # ifconfig
 eth0      Link encap:Ethernet  HWaddr 00:0C:29:49:06:01  
           inet addr:192.168.159.129  Bcast:192.168.159.255  Mask:255.255.255.0
@@ -29,7 +31,7 @@ TYPE=Ethernet
 UUID=9d50521c-5caa-436e-9d86-ec1277fe0631
 ONBOOT=yes
 NM_CONTROLLED=yes
-BOOTPROTO=dhcp
+BOOTPROTO=dhcp　　　★DHCPで設定しているので、IPアドレスの記載はここには無い
 
 
 ip route を実行する。
