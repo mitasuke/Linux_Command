@@ -1,1 +1,17 @@
+cronの内容を知りたい時に確認しているのは以下のようなところ。
+
+/var/spool/cron/ の下の各ファイル（cat /var/spool/cron/*　を実行すればスケジュールを一気に確認できる）
+/etc/cron.d の下
+/etc/cron.daily/ の下
+/etc/cron.hourly/ の下
+/etc/cron.weekly/ の下
+/etc/cron.monthly/ の下
+/etc/crontab の中身
+
+各ユーザー用のcronファイルは、/var/spool/cron の下に、ユーザー名で保存されている。
+
+cronのファイル内に実行コマンドや実行スクリプトのパスなどが書いてあるので、
+そこから更に深堀りしていく。
+
+crontab -l を実行すれば、現在のユーザーのcron設定を確認することができる。
 
