@@ -1,1 +1,27 @@
+/tmp/abc ディレクトリをアーカイブ＆gzip圧縮して /tmp/abc.tar.gz を作成する。
+# tar czf /tmp/abc.tar.gz /tmp/abc
+
+c・・・新しいアーカイブを作成する時につける
+z・・・gzip圧縮もする
+f・・・fの後に指定したファイル名でアーカイブファイルを作る
+
+
+gzip圧縮を解凍する。（カレントディレクトリ配下に解凍される模様）
+# gunzip /tmp/abc.tar.gz
+
+
+tarアーカイブの中身を一覧として表示する。
+# tar tf /tmp/abc.tar
+tmp/abc/
+tmp/abc/test
+tmp/abc/test.tar.gz
+
+
+単純にファイルを圧縮する。
+gzip ファイル名
+
+
+指定したディレクトリ内のファイルだけ圧縮する。（ディレクトリの下に ～.gz がたくさんできる）
+gzip -r ディレクトリ名
+
 
