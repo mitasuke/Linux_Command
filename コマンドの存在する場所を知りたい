@@ -1,1 +1,43 @@
+コマンドを実行した時に「コマンドが見つからない」と表示されてエラーになることがある。
+（一般ユーザで ifconfig を実行したりした時とか・・・。）
+その時は、コマンドにパスを通すか、コマンドを絶対パスで指定して実行させてやる。
+
+
+コマンドが存在する場所を調べる方法。
+# whereis ls
+ls: /bin/ls /usr/share/man/man1/ls.1.gz /usr/share/man/man1p/ls.1p.gz
+
+# whereis ifconfig
+ifconfig: /sbin/ifconfig /usr/share/man/man8/ifconfig.8.gz
+　　→ ifconfig でエラーになっても、 /sbin/ifconfig を実行すればいけるはず。
+
+
+コマンドにパスが通っているか確認するには・・・。
+# echo $PATH
+/sbin:/bin:/usr/sbin:/usr/bin:/opt/aws/bin　　　※左のほうが優先される
+
+一時的にパスを通す方法。（/usr/local/pgsql/bin をパスに追加したい場合）
+# PATH=$PATH:/usr/local/pgsql/bin　　★これまでの環境変数PATH に追加する
+# export PATH　　　　　★環境変数PATHをエクスポートする（反映する）
+
+
+ログインした時点で、指定したコマンドへのパスが通るように設定するには・・・。
+ユーザーのホームディレクトリの下にある .bash_profile の中の PATH= に追記してやればOK。
+
+.bash_profileの中身はこんな感じ。
+# cat /home/user1/.bash_profile
+------------------------------------------------------
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin　　　★ここにパスを追記してやる
+
+export PATH
+------------------------------------------------------
 
