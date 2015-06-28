@@ -1,0 +1,13 @@
+OSの再起動をすぐに実行する場合は以下のどちらか。
+# reboot
+か
+# shutdown -r now
+
+
+OSをすぐに停止したい場合は以下のどちらか。
+# halt
+か
+# shutdown -h now
+
+
+気分的に shutdown ばかり使っている。
