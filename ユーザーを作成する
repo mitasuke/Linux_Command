@@ -1,0 +1,6 @@
+例：
+ユーザー「testuser」を、プライマリグループ「main」、サブグループ「wheel」として作成する。
+-pオプションでパスワード「password」を設定できる。
+-mオプションでホームディレクトリを自動で作成できる。（無くても良いかも）
+
+# /usr/sbin/useradd -g main -G wheel -m testuser -p password
