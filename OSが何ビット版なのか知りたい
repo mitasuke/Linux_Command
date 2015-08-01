@@ -1,0 +1,18 @@
+参考：http://takuya-1st.hatenablog.jp/entry/2014/05/21/011928
+
+# uname -a
+Linux aws-2 3.14.48-33.39.amzn1.x86_64 #1 SMP Tue Jul 14 23:43:07 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+とか
+
+# file /sbin/init
+/sbin/init: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.18, BuildID[sha1]=323b47644cac5cfdaeed808653714728d2650cb3, stripped
+
+で確認ができる。
+
+
+参考：http://d.hatena.ne.jp/shouh/20150328/1427502581
+
+結局、どれが何ビットなのか？
+x86_64, amd64 は64ビット
+i386, i686, x86 は32ビット
