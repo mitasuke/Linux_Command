@@ -1,0 +1,55 @@
+# NICの状態を表示する
+ethtool eth0
+
+設定する引数は ifconfig コマンドで調べる。(eth0,eth1など)
+
+通常のサーバで実行すると以下のように表示される。
+※以下より引用：
+　http://www.atmarkit.co.jp/flinux/rensai/linuxtips/610netchk.html
+====================================================
+Settings for eth0:
+         Supported ports: [ TP ]
+         Supported link modes:   10baseT/Half 10baseT/Full
+                                 100baseT/Half 100baseT/Full
+                                 1000baseT/Full
+         Supports auto-negotiation: Yes
+         Advertised link modes:  10baseT/Half 10baseT/Full
+                                 100baseT/Half 100baseT/Full
+                                 1000baseT/Full
+         Advertised auto-negotiation: Yes
+         Speed: 1000Mb/s
+         Duplex: Full
+         Port: Twisted Pair
+         PHYAD: 0
+         Transceiver: internal
+         Auto-negotiation: on
+         Supports Wake-on: umbg
+         Wake-on: g
+         Current message level: 0x00000007 (7)
+         Link detected: yes
+====================================================
+
+
+AWS上で実行すると以下の情報しか表示されなかった・・・。
+====================================================
+[root@aws k_mita]# ethtool eth0
+Settings for eth0:
+        Link detected: yes
+
+[root@aws k_mita]# ethtool lo
+Settings for lo:
+        Link detected: yes
+====================================================
+
+
+LANケーブルが挿さっている場合は「Link detected: yes」と表示される。
+LANケーブルが抜けている場合は「Link detected: no」と表示される。
+
+
+1000BASEのNICを使用しているのにスピードが「100Mb/s」だったり、
+デュプレックスが「half」になっている場合は、
+ハブとの相性やケーブルの不具合などが考えられる。
+ethtoolコマンドを実行して、［Speed］や［Duplex］の値がおかしいときは、以下のように強制的に修正して、状況が改善されるかどうかを確認する。
+
+# ethtool -s eth0 speed 100　←速度を100Mb/sに設定
+# ethtool -s eth0 duplex full　←デュプレックスをfullに設定
