@@ -1,0 +1,6 @@
+参考：http://otndnld.oracle.co.jp/document/products/secure-backup/102/html/E06040-02/scsi_appendix.htm
+
+どんなSCSIデバイスがつながっているか・・・などを確認したい時に。
+
+cat /proc/scsi/scsi
+を実行して、内容を確認する。
