@@ -1,6 +1,7 @@
 timeコマンドを使う。
 
 # time 実行するコマンド
+# time 実行するスクリプト
 
 例：
 # time ls -la
