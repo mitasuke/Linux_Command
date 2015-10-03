@@ -1,0 +1,21 @@
+$ ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 06:CC:6A:07:33:44
+          inet addr:172.31.4.230  Bcast:172.31.15.255  Mask:255.255.240.0
+          inet6 addr: fe80::4cc:6aff:fe07:3344/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:18259193 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:20112657 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:2705991070 (2.5 GiB)  TX bytes:3990922363 (3.7 GiB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:79 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:79 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:8741 (8.5 KiB)  TX bytes:8741 (8.5 KiB)
+
+インタフェースがUPになっていないと、ifconfigを実行しても表示されない。
+ネットワーク関係の障害発生時や、NIC交換後の確認なんかには実行するかも。
