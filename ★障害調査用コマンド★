@@ -1,0 +1,170 @@
+参考：http://easyramble.com/linux-command-to-check-status.html
+
+OS：CentOS6.7
+
+
+ディスクの使用状況を確認する。
+# df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/mapper/VolGroup-lv_root
+                       26G  946M   24G   4% /
+tmpfs                 935M     0  935M   0% /dev/shm
+/dev/xvda1            477M   63M  390M  14% /boot
+
+
+メモリの使用状況を確認する。
+# free
+             total       used       free     shared    buffers     cached
+Mem:       1914124     411000    1503124        132      99340     234952
+-/+ buffers/cache:      76708    1837416
+Swap:      3145724          0    3145724
+
+
+ロードアベレージ（システム全体の負荷状況を表す指標）を確認する。
+# uptime
+ 14:43:45 up 5 days,  1:54,  1 user,  load average: 0.00, 0.00, 0.00
+
+wコマンドでも確認可能。
+# w
+ 14:45:02 up 5 days,  1:55,  1 user,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+user    pts/0    接続元のホスト名   14:38    0.00s  0.01s  0.04s sshd: user [priv]
+
+
+CPUやメモリの利用率、プロセス稼動状況などをリアルタイムで確認する。
+表示内容は更新され続ける。
+終了したい場合は q を押す。
+# top
+top - 14:49:53 up 5 days,  2:00,  1 user,  load average: 0.00, 0.00, 0.00
+Tasks:  68 total,   1 running,  67 sleeping,   0 stopped,   0 zombie
+Cpu(s):  0.0%us,  0.0%sy,  0.0%ni,100.0%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Mem:   1914124k total,   411488k used,  1502636k free,    99372k buffers
+Swap:  3145724k total,        0k used,  3145724k free,   235052k cached
+
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+    1 root      20   0 19232 1572 1304 S  0.0  0.1   0:00.16 init
+    2 root      20   0     0    0    0 S  0.0  0.0   0:00.00 kthreadd
+    3 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 migration/0
+    4 root      20   0     0    0    0 S  0.0  0.0   0:00.00 ksoftirqd/0
+    5 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 stopper/0
+    6 root      RT   0     0    0    0 S  0.0  0.0   0:00.37 watchdog/0
+    7 root      20   0     0    0    0 S  0.0  0.0   0:13.74 events/0
+    8 root      20   0     0    0    0 S  0.0  0.0   0:00.00 events/0
+    9 root      20   0     0    0    0 S  0.0  0.0   0:00.00 events_long/0
+   10 root      20   0     0    0    0 S  0.0  0.0   0:00.00 events_power_ef
+   11 root      20   0     0    0    0 S  0.0  0.0   0:00.00 cgroup
+   12 root      20   0     0    0    0 S  0.0  0.0   0:00.00 khelper
+   13 root      20   0     0    0    0 S  0.0  0.0   0:00.00 netns
+   14 root      20   0     0    0    0 S  0.0  0.0   0:00.00 async/mgr
+   15 root      20   0     0    0    0 S  0.0  0.0   0:00.00 pm
+   16 root      20   0     0    0    0 S  0.0  0.0   0:00.00 xenwatch
+   17 root      20   0     0    0    0 S  0.0  0.0   0:00.30 xenbus
+
+topコマンドに関する説明は以下：
+http://qiita.com/k0kubun/items/7368c323d90f24a00c2f
+http://linuxserver.jp/linux/top%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89
+
+top：CPU使用率順にソートして表示
+top -a：メモリ使用率順にソートして表示
+top -p プロセスID：特定のプロセスに関する情報だけを表示
+top -d1：1秒ごとに情報を更新する（まさにリアルタイム監視）
+
+
+sarコマンドを使って、CPU,メモリ,ディスクI/Oなどの情報をモニタリングすることができる。
+使い方はここを参照：http://naoberry.com/tech/sar/
+
+sarを使用するにはsysstatパッケージをインストールしておく必要がある。(yum install sysstat)
+
+
+CPUやメモリの負荷状況などを確認する。
+# vmstat
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 1502256  99596 235120    0    0     0     2    9    9  0  0 100  0  0
+
+
+ディスクI/Oの状況を確認する。
+（iostatコマンドを使用するには、sarと同様にsysstatパッケージが必要）
+# iostat
+Linux 2.6.32-573.7.1.el6.x86_64 (test-server)     2015年10月13日  _x86_64_        (1 CPU)
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.03    0.00    0.11    0.06    0.00   99.81
+
+Device:            tps   Blk_read/s   Blk_wrtn/s   Blk_read   Blk_wrtn
+xvda              0.27         0.55         3.22     241978    1418532
+dm-0              0.42         0.53         3.22     232386    1418504
+dm-1              0.00         0.01         0.00       2744          0
+
+
+実行中プロセスに関する情報(PID,CPU負荷,メモリ使用率など)を確認する。
+# ps auxwww
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0  19232  1572 ?        Ss   Oct08   0:00 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    Oct08   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    Oct08   0:00 [migration/0]
+root         4  0.0  0.0      0     0 ?        S    Oct08   0:00 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S    Oct08   0:00 [stopper/0]
+root         6  0.0  0.0      0     0 ?        S    Oct08   0:00 [watchdog/0]
+root         7  0.0  0.0      0     0 ?        S    Oct08   0:13 [events/0]
+root         8  0.0  0.0      0     0 ?        S    Oct08   0:00 [events/0]
+root         9  0.0  0.0      0     0 ?        S    Oct08   0:00 [events_long/0]
+root        10  0.0  0.0      0     0 ?        S    Oct08   0:00 [events_power_ef]
+root        11  0.0  0.0      0     0 ?        S    Oct08   0:00 [cgroup]
+root        12  0.0  0.0      0     0 ?        S    Oct08   0:00 [khelper]
+root        13  0.0  0.0      0     0 ?        S    Oct08   0:00 [netns]
+root        14  0.0  0.0      0     0 ?        S    Oct08   0:00 [async/mgr]
+root        15  0.0  0.0      0     0 ?        S    Oct08   0:00 [pm]
+root        16  0.0  0.0      0     0 ?        S    Oct08   0:00 [xenwatch]
+root        17  0.0  0.0      0     0 ?        S    Oct08   0:00 [xenbus]
+root        18  0.0  0.0      0     0 ?        S    Oct08   0:00 [sync_supers]
+root        19  0.0  0.0      0     0 ?        S    Oct08   0:01 [bdi-default]
+root        20  0.0  0.0      0     0 ?        S    Oct08   0:00 [kintegrityd/0]
+root        21  0.0  0.0      0     0 ?        S    Oct08   0:00 [kblockd/0]
+root        22  0.0  0.0      0     0 ?        S    Oct08   0:00 [ata_aux]
+root        23  0.0  0.0      0     0 ?        S    Oct08   0:00 [ata_sff/0]
+root        24  0.0  0.0      0     0 ?        S    Oct08   0:00 [ksuspend_usbd]
+root        25  0.0  0.0      0     0 ?        S    Oct08   0:00 [khubd]
+root        26  0.0  0.0      0     0 ?        S    Oct08   0:00 [kseriod]
+root        27  0.0  0.0      0     0 ?        S    Oct08   0:00 [md/0]
+root        28  0.0  0.0      0     0 ?        S    Oct08   0:00 [md_misc/0]
+root        29  0.0  0.0      0     0 ?        S    Oct08   0:00 [linkwatch]
+root        30  0.0  0.0      0     0 ?        S    Oct08   0:00 [khungtaskd]
+root        31  0.0  0.0      0     0 ?        S    Oct08   0:00 [kswapd0]
+root        32  0.0  0.0      0     0 ?        SN   Oct08   0:00 [ksmd]
+root        33  0.0  0.0      0     0 ?        S    Oct08   0:00 [aio/0]
+root        34  0.0  0.0      0     0 ?        S    Oct08   0:00 [crypto/0]
+root        41  0.0  0.0      0     0 ?        S    Oct08   0:00 [kthrotld/0]
+root        43  0.0  0.0      0     0 ?        S    Oct08   0:00 [khvcd]
+root        44  0.0  0.0      0     0 ?        S    Oct08   0:00 [kpsmoused]
+root        45  0.0  0.0      0     0 ?        S    Oct08   0:00 [usbhid_resumer]
+root        46  0.0  0.0      0     0 ?        S    Oct08   0:00 [deferwq]
+root        78  0.0  0.0      0     0 ?        S    Oct08   0:00 [kdmremove]
+root        79  0.0  0.0      0     0 ?        S    Oct08   0:00 [kstriped]
+root       223  0.0  0.0      0     0 ?        S    Oct08   0:00 [kdmflush]
+root       225  0.0  0.0      0     0 ?        S    Oct08   0:00 [kdmflush]
+root       243  0.0  0.0      0     0 ?        S    Oct08   0:01 [jbd2/dm-0-8]
+root       244  0.0  0.0      0     0 ?        S    Oct08   0:00 [ext4-dio-unwrit]
+root       319  0.0  0.0  10664   772 ?        S<s  Oct08   0:00 /sbin/udevd -d
+root       525  0.0  0.0  10668   796 ?        S<   Oct08   0:00 /sbin/udevd -d
+root       556  0.0  0.0      0     0 ?        S    Oct08   0:00 [jbd2/xvda1-8]
+root       557  0.0  0.0      0     0 ?        S    Oct08   0:00 [ext4-dio-unwrit]
+root       591  0.0  0.0      0     0 ?        S    Oct08   0:00 [kauditd]
+root       737  0.0  0.0      0     0 ?        S    Oct08   0:01 [flush-253:0]
+root       807  0.0  0.0 255424  1760 ?        Sl   Oct08   0:00 /sbin/rsyslogd -i /var/run/syslogd.pid -c 5
+root       830  0.0  0.0  11436  1624 ?        S    Oct08   0:07 /bin/bash /usr/sbin/xe-daemon -p /var/run/xe-daemon.pid
+root       955  0.0  0.0  66224  1232 ?        Ss   Oct08   0:00 /usr/sbin/sshd
+root      1034  0.0  0.1  80868  3424 ?        Ss   Oct08   0:01 /usr/libexec/postfix/master
+postfix   1047  0.0  0.1  81116  3428 ?        S    Oct08   0:00 qmgr -l -t fifo -u
+root      1048  0.0  0.0 116888  1288 ?        Ss   Oct08   0:01 crond
+root      1062  0.0  0.0   4064   596 tty1     Ss+  Oct08   0:00 /sbin/mingetty /dev/tty1
+root      2571  0.0  0.0   4080   652 hvc0     Ss+  Oct08   0:00 /sbin/agetty /dev/hvc0 38400 vt100-nav
+ntp       4872  0.0  0.1  26512  1932 ?        Ss   Oct08   0:00 ntpd -u ntp:ntp -p /var/run/ntpd.pid -g
+postfix  20469  0.0  0.1  80948  3388 ?        S    14:36   0:00 pickup -l -t fifo -u
+root     20609  0.0  0.2 102504  4432 ?        Ss   14:38   0:00 sshd: user [priv]
+user    20611  0.0  0.1 102504  1936 ?        S    14:38   0:00 sshd: user@pts/0
+user    20612  0.0  0.0 112512  1884 pts/0    Ss   14:38   0:00 -bash
+root     20629  0.0  0.1 151892  1972 pts/0    S    14:38   0:00 su -
+root     20630  0.0  0.0 112512  1912 pts/0    S    14:38   0:00 -bash
+root     22151  0.0  0.0   4072   536 ?        S    15:08   0:00 sleep 60
+root     22152  0.0  0.0 110204  1112 pts/0    R+   15:08   0:00 ps auxwww
