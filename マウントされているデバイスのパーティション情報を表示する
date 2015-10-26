@@ -1,0 +1,29 @@
+参考：http://itpro.nikkeibp.co.jp/article/COLUMN/20060227/230775/
+
+[参考]パーティションとは？
+https://www.express.nec.co.jp/linux/distributions/knowledge/system/fdisk.html
+
+
+# fdisk -l
+
+Disk /dev/xvda: 32.2 GB, 32212254720 bytes, 62914560 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O サイズ (最小 / 推奨): 512 バイト / 512 バイト
+Disk label type: dos
+ディスク識別子: 0x000a5138
+
+デバイス ブート      始点        終点     ブロック   Id  システム
+/dev/xvda1   *        2048     1026047      512000   83  Linux
+/dev/xvda2         1026048    62914559    30944256   8e  Linux LVM
+
+Disk /dev/mapper/centos-root: 29.5 GB, 29490151424 bytes, 57597952 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O サイズ (最小 / 推奨): 512 バイト / 512 バイト
+
+
+Disk /dev/mapper/centos-swap: 2147 MB, 2147483648 bytes, 4194304 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O サイズ (最小 / 推奨): 512 バイト / 512 バイト
