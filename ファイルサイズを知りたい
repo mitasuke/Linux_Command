@@ -25,7 +25,7 @@ du -sh で各ディレクトリ配下のファイル(ディレクトリ)サイ�
 4.0K    /srv
 0       /sys
 56K     /tmp
-1.1G    /usr　★何か /usr のサイズがでかい！
+1.1G    /usr　★ /usr のサイズがでかい！
 292M    /var
 
 # du -sh /usr/*
