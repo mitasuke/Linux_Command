@@ -1,0 +1,14 @@
+文字コードの確認
+
+# file -i memo
+memo: text/plain; charset=iso-8859-1
+
+# nkf --guess memo
+EUC-JP
+
+memoファイルの文字コードをEUC-JPからUTF-8に変換してmemo_newとして保存
+
+# iconv -f EUC-JP -t UTF-8 memo -o memo_new
+
+# nkf --guess memo_new
+UTF-8
