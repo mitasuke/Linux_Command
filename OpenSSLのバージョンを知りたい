@@ -1,4 +1,0 @@
-openssl version を実行すれば表示される。
-
-$ openssl version
-OpenSSL 1.0.1k-fips 8 Jan 2015
