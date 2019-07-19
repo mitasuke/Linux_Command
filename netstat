@@ -1,4 +1,4 @@
-ポートの仕様状況を確認する。
+ポートの使用状況を確認する。
 
 # netstat -na
 Active Internet connections (servers and established)
