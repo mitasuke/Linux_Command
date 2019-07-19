@@ -11,3 +11,10 @@ Linux aws-2 3.14.48-33.39.amzn1.x86_64 #1 SMP Tue Jul 14 23:43:07 UTC 2015 x86_6
 結局、どれが何ビットなのか？
 x86_64, amd64 は64ビット
 i386, i686, x86 は32ビット
+
+# cat /etc/redhat-release
+CentOS release 6.6 (Final)
+
+# cat /etc/issue
+CentOS release 6.6 (Final)
+Kernel \r on an \m
