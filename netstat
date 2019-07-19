@@ -1,3 +1,5 @@
+ポートの仕様状況を確認する。
+
 # netstat -na
 Active Internet connections (servers and established)
 Proto Recv-Q Send-Q Local Address               Foreign Address             State
