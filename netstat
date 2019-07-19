@@ -1,0 +1,19 @@
+# netstat -na
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State
+tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN
+tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN
+tcp        0      0 172.31.4.230:22             124.212.13.115:50533        ESTABLISHED
+
+「State」の意味について：
+ESTABLISHED・・・接続が確立したソケット
+SYN_SENT・・・接続を試みているソケット
+SYN_RECV・・・接続要求を受信しているソケット
+FIN_WAIT1・・・切断中のソケット
+FIN_WAIT2・・・リモートからの切断を待っているソケット
+TIME_WAIT・・・リモートからの切断が再送されるのを待っているソケット
+CLOSED・・・未使用なソケット
+CLOSE_WAIT・・・リモート側から切断され，ソケットがクローズされるのを待っているソケット
+LAST_ACK・・・すでに切断されており，ソケットもクローズされているソケット
+CLOSING・・・ソケットが切断されているか，すべてのデータが転送されていないソケット
+UNKNOWN・・・状態が不明なソケット
