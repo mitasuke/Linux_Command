@@ -1,7 +1,5 @@
-ifconfigコマンドを使うのが楽。
-「ifconfig: command not found」とか表示されたら、/sbin/ifconfig をやってみる。
+ifconfig コマンドでは以下のような出力
 
-# ifconfig
 eth0      Link encap:Ethernet  HWaddr 00:0C:29:49:06:01  
           inet addr:192.168.159.129  Bcast:192.168.159.255  Mask:255.255.255.0
           inet6 addr: fe80::20c:29ff:fe49:601/64 Scope:Link
@@ -22,33 +20,15 @@ lo        Link encap:Local Loopback
           RX bytes:480 (480.0 b)  TX bytes:480 (480.0 b)
 
 
-/etc/sysconfig/network-scripts/ifcfg-ethX (Xは数字)ファイルを見てみる。
-場合によってはここに設定されていないこともある。
-# cat /etc/sysconfig/network-scripts/ifcfg-eth0
-DEVICE=eth0
-HWADDR=00:0C:29:49:06:01
-TYPE=Ethernet
-UUID=9d50521c-5caa-436e-9d86-ec1277fe0631
-ONBOOT=yes
-NM_CONTROLLED=yes
-BOOTPROTO=dhcp　　　★DHCPで設定しているので、IPアドレスの記載はここには無い
+ip route コマンドでは以下のような出力
 
-
-ip route を実行する。
-# ip route
 192.168.159.0/24 dev eth0  proto kernel  scope link  src 192.168.159.129  metric 1 
 default via 192.168.159.2 dev eth0  proto static 
 
 
-ipコマンドでも確認できるらしい。
-# ip -f inet addr
+ip -f inet addr でも確認できる
+
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN 
     inet 127.0.0.1/8 scope host lo
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
     inet 192.168.159.129/24 brd 192.168.159.255 scope global eth0
-
-
-ちゃんと設定しているのであれば、/etc/hosts ファイルを見てみるのも良いかもしれない。
-# cat /etc/hosts
-
-
