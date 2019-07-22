@@ -1,0 +1,2 @@
+（例）90日前以降のログファイルを削除するcron
+0 2 * * * find /www/*/var/log/access_log* -type f -mtime +90 | xargs rm -f
