@@ -1,7 +1,0 @@
-wcコマンドを使う。
-
-例；
-/tmp/newfiles.txt の行数を表示する。
-# wc -l /tmp/newfiles.txt
-4352 /tmp/newfiles.txt
-
