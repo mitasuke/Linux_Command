@@ -1,0 +1,8 @@
+grep VmSwap /proc/*/status | sort -k 2 -nr
+
+こんな感じに出てくる。
+/proc/1461/status:VmSwap:         112928 kB
+/proc/5373/status:VmSwap:           8120 kB
+/proc/20627/status:VmSwap:          5844 kB
+/proc/6178/status:VmSwap:           5184 kB
+/proc/6191/status:VmSwap:           4056 kB
