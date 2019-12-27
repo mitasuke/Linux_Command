@@ -1,0 +1,6 @@
+SSLv2,SSLv3,TLS1.0,TLS1.1,TLS1.2 に対応しているか確認する方法
+openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -ssl2
+openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -ssl3
+openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -tls1
+openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -tls1_1
+openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -tls1_2
