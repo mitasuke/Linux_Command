@@ -6,5 +6,5 @@
 # resize2fs /dev/mapper/lv1
 
 サイズを指定して拡張する場合（3GBだけ拡張する場合）：
-# lvextend -L+3G /dev/mapper/vg01-lv04
-# resize2fs /dev/mapper/vg01-lv04
+# lvextend -L+3G /dev/mapper/lv1
+# resize2fs /dev/mapper/lv1
