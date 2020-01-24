@@ -39,3 +39,10 @@ gzip -9 /test/test/*/log/{a,b,c}_log.201405
 
 ～.tar.gz(いわゆるtarボール)を解凍・展開する
 # tar zxvf ファイル名
+
+
+まとめてファイルを圧縮
+# tar zcpvf compress.tgz cgi-bin data htdocs lib
+
+ディレクトリを移動して展開（/www/example.jp/ 配下に展開）
+# tar -C /www/example.jp/ -zxpvf compress.tgz
