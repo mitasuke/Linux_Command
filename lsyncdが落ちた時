@@ -1,0 +1,20 @@
+lsyncdが以下のようなエラーを吐いて落ちることがある。
+Thu May 18 23:11:32 2017 Error: Terminating since out of inotify watches.
+Consider increasing /proc/sys/fs/inotify/max_user_watches
+
+lsyncdがディレクトリを監視するのに使っているinotifyというLinuxの機能があり、
+そいつが監視できるディレクトリ数の上限を超えてしまったので、監視できず落ちたらしい。
+
+現在の設定値の確認
+# cat /proc/sys/fs/inotify/max_user_watches
+（恐らくデフォルトは 8192）
+
+設定値を変更
+# echo 163840 > /proc/sys/fs/inotify/max_user_watches
+# cat /proc/sys/fs/inotify/max_user_watches
+
+再起動時に反映されるように設定：
+# vi /etc/sysctl.conf
+------------------------------------
+fs.inotify.max_user_watches = 163840
+------------------------------------
