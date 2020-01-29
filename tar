@@ -1,0 +1,3 @@
+ログを固めて消す時はこんな感じ
+tar zcpvf access_log.201508.tgz access_log.201508??
+rm -f access_log.201508??
