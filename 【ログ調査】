@@ -14,3 +14,18 @@ cat access.log | awk '{print $1}' | cut -d . -f1,2,3,4 | sort | uniq -c >> aaa.t
  
 アクセスログから接続元のIPアドレス数が多い順にソート
 cat access_log | awk '{print $1}' | cut -d . -f1,2,3,4 | sort | uniq -c | sort -k1,1nr
+
+特定文字列を含むログを引っ掛けて、更にIPアドレスおよび出力数だけ表示
+cat error_log | grep "Too many connections" | awk '{print $8}' | sort | uniq -c
+
+IPアドレスが xxx.xxx.xxx.xxx] という形で表示されるのでカッコ消す
+cat error_log | grep "Too many connections" | awk '{print $8}' | tr -d "]" | sort | uniq -c
+
+このように出力される
+     10 xxx.xxx.xxx.xxx
+      1 xxx.xxx.xxx.xxx
+     58 xxx.xxx.xxx.xxx
+      2 xxx.xxx.xxx.xxx
+      2 xxx.xxx.xxx.xxx
+      2 xxx.xxx.xxx.xxx
+     10 xxx.xxx.xxx.xxx
