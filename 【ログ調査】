@@ -12,3 +12,5 @@ cat access.log | awk '{print $1}' | cut -d . -f1,2,3,4 | sort | uniq -c >> aaa.t
  188 35.184.73.193
  
  
+アクセスログから接続元のIPアドレス数が多い順にソート
+cat access_log | awk '{print $1}' | cut -d . -f1,2,3,4 | sort | uniq -c | sort -k1,1nr
