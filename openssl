@@ -4,3 +4,9 @@ openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -ss
 openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -tls1
 openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -tls1_1
 openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -tls1_2
+
+
+自己署名証明書を作る方法（鍵長2048bit、RSA暗号）
+openssl genrsa -out key.pem 2048 
+openssl req -new -key key.pem -out csr
+openssl x509 -req -in csr -signkey key.pem -sha256 -days 3650 -out cert.pem
