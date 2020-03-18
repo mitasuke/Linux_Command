@@ -1,0 +1,8 @@
+サーバ上でパスワードを生成できる。
+
+インストール
+# yum install expect
+
+8桁指定でパスワード生成
+# mkpasswd -l 8
+gRr92pC#
