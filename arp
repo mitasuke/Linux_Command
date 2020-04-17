@@ -1,0 +1,5 @@
+IPアドレスが使われていないか確認したい時はこのようにする。
+ping xxx.xxx.xxx.xxx
+/sbin/arp -na | grep xxx.xxx.xxx.xxx
+
+incompleteと表示されていたら使われていない。
