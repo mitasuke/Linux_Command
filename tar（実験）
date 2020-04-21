@@ -1,0 +1,244 @@
+2016年6月12日
+
+
+aliasにtar関連のはなかった。
+
+
+[CentOS5.11]
+
+$ rpm -qa | grep tar
+tar-1.15.1-32.el5_8
+
+$ tar zcpvf test.tgz aaa bbb
+
+-rw-r--r-- 1 staff staff       122  6月 12 15:05 test.tgz
+
+　→lessで中身を見られる。
+
+$ rm -i aaa bbb
+
+$ tar zcpvf test.tgz aaa bbb
+tar: aaa: stat 不能: そのようなファイルやディレクトリはありません
+tar: bbb: stat 不能: そのようなファイルやディレクトリはありません
+tar: 処理中にエラーが起きましたが、最後まで処理してからエラー終了させました
+
+-rw-r--r-- 1 staff staff        45  6月 12 15:07 test.tgz
+
+　→ファイルが小さくなってる。
+　　lessで見ようとすると「"test.tgz" may be a binary file.  See it anyway?」
+　　と言われてしまう。
+
+★何の確認もなく.tgzが上書きされてしまった★
+
+
+[CentOS6.8]
+
+$ tar zcpvf test.tgz aaa bbb
+
+-rw-rw-r-- 1 staff staff      120  6月 12 15:11 2016 test.tgz
+
+　→lessで中身を見られる。
+
+$ rm aaa bbb
+
+$ tar zcpvf test.tgz aaa bbb
+tar: aaa: stat 不能: そのようなファイルやディレクトリはありません
+tar: bbb: stat 不能: そのようなファイルやディレクトリはありません
+tar: 前のエラーにより失敗ステータスで終了します
+
+$ rpm -qa | grep tar
+tar-1.23-14.el6.x86_64
+
+-rw-rw-r-- 1 staff staff       45  6月 12 15:11 2016 test.tgz
+
+　→lessで中身を確認できるけど空っぽ
+
+★結局上書きされた★
+
+
+
+●backupオプション使ってみる
+
+
+$ touch aaa bbb
+$ vi aaa　（適当になんか書いて保存）
+$ tar zcpvf test.tgz aaa bbb
+$ rm aaa bbb
+
+backup以外のオプションにハイフンつけないと・・・、
+
+$ tar --backup zcpvf test.tgz aaa bbb
+tar: `-Acdtrux' または `--test-label' オプションのうち、いずれか 1つを指定しなければなりません
+より詳しい情報は `tar --help' または `tar --usage' で.
+
+　→怒られる
+
+ハイフンつけます！
+
+$ tar --backup -zcpvf test.tgz aaa bbb
+tar: aaa: stat 不能: そのようなファイルやディレクトリはありません
+tar: bbb: stat 不能: そのようなファイルやディレクトリはありません
+名前を `test.tgz' から `test.tgz~' に変更します
+tar: 前のエラーにより失敗ステータスで終了します
+
+$ ls -l
+-rw-rw-r-- 1 staff staff       45  6月 12 15:20 2016 test.tgz
+-rw-rw-r-- 1 staff staff      119  6月 12 15:19 2016 test.tgz~
+
+　→チルダついてるファイル名でバックアップ取れてる
+
+$ less test.tgz
+　→中身見れるけど空っぽ
+
+$ less test.tgz\~
+　→「"test.tgz\~" may be a binary file.  See it anyway?」と・・・。
+　　バイナリファイル扱い？？
+
+$ tar zxpvf test.tgz~
+$ cat aaa
+
+　→解凍はできたし、aaaの中身も確認できた。（変化なし）
+
+更にもう１回上書きをやらかしたとする。
+$ tar --backup -zcpvf test.tgz aaa bbb
+tar: aaa: stat 不能: そのようなファイルやディレクトリはありません
+tar: bbb: stat 不能: そのようなファイルやディレクトリはありません
+名前を `test.tgz' から `test.tgz~' に変更します
+tar: 前のエラーにより失敗ステータスで終了します
+
+$ ls -l
+-rw-rw-r-- 1 staff staff       45  6月 12 15:35 2016 test.tgz
+-rw-rw-r-- 1 staff staff       45  6月 12 15:32 2016 test.tgz~
+
+　→どっちも空になって取り返しつかない
+
+
+
+$ tar zcpvf test.tgz aaa bbb
+$ rm aaa bbb
+$ touch ccc ddd
+$ tar --backup -zcpvf test.tgz ccc ddd
+ccc
+ddd
+名前を `test.tgz' から `test.tgz~' に変更します
+
+$ ls -l
+-rw-rw-r-- 1 staff staff      119  6月 12 15:38 2016 test.tgz
+-rw-rw-r-- 1 staff staff      137  6月 12 15:37 2016 test.tgz~
+
+$ less test.tgz
+　→ccc と ddd しかない！
+
+$ tar zxvpf test.tgz~
+　→lessだとバイナリファイル扱いされてしまうけど、
+　　解凍してみると、aaaとbbbファイルは無事で中身も確認できた。
+
+
+
+$ man tar
+---------------------------------------
+       Mandatory or optional arguments to long options are also mandatory or optional for any corresponding short options.
+
+       The backup suffix is ‘~’, unless set with --suffix or SIMPLE_BACKUP_SUFFIX. The version control may be set with --backup or VERSION_CONTROL, values are:
+
+       t, numbered
+              make numbered backups
+---------------------------------------
+
+
+$ touch aaa bbb
+$ tar zcpvf test.tgz aaa bbb
+$ rm aaa bbb
+$ tar --backup=t -zcpvf test.tgz aaa bbb
+tar: aaa: stat 不能: そのようなファイルやディレクトリはありません
+tar: bbb: stat 不能: そのようなファイルやディレクトリはありません
+名前を `test.tgz' から `test.tgz.~1~' に変更します
+tar: 前のエラーにより失敗ステータスで終了します
+
+$ ls -l
+-rw-rw-r-- 1 staff staff  45  6月 12 15:43 2016 test.tgz
+-rw-rw-r-- 1 staff staff 119  6月 12 15:41 2016 test.tgz.~1~
+
+$ tar zxpvf test.tgz.~1~
+　→解凍できたし中身も正常
+
+
+$ touch aaa bbb
+$ tar zcpvf test.tgz aaa bbb
+$ rm aaa bbb
+$ tar --backup=t -zcpvf test.tgz aaa bbb
+tar: aaa: stat 不能: そのようなファイルやディレクトリはありません
+tar: bbb: stat 不能: そのようなファイルやディレクトリはありません
+名前を `test.tgz' から `test.tgz.~1~' に変更します
+tar: 前のエラーにより失敗ステータスで終了します
+
+$ tar --backup=t -zcpvf test.tgz aaa bbb
+tar: aaa: stat 不能: そのようなファイルやディレクトリはありません
+tar: bbb: stat 不能: そのようなファイルやディレクトリはありません
+名前を `test.tgz' から `test.tgz.~2~' に変更します
+tar: 前のエラーにより失敗ステータスで終了します
+
+更に実行
+$ tar --backup=t -zcpvf test.tgz aaa bbb
+$ tar --backup=t -zcpvf test.tgz aaa bbb
+$ tar --backup=t -zcpvf test.tgz aaa bbb
+
+$ ls -l
+合計 24
+-rw-rw-r-- 1 staff staff  45  6月 12 15:46 2016 test.tgz
+-rw-rw-r-- 1 staff staff 119  6月 12 15:41 2016 test.tgz.~1~
+-rw-rw-r-- 1 staff staff  45  6月 12 15:43 2016 test.tgz.~2~
+-rw-rw-r-- 1 staff staff  45  6月 12 15:46 2016 test.tgz.~3~
+-rw-rw-r-- 1 staff staff  45  6月 12 15:46 2016 test.tgz.~4~
+-rw-rw-r-- 1 staff staff  45  6月 12 15:46 2016 test.tgz.~5~
+
+$ tar zxpvf test.tgz.~1~
+　→解凍できたし中身も正常
+
+挙動しては、何度も backup=t 付きで実行すると、
+・既にあるtest.tgzが番号付きの名前にリネームされる。
+・新たに作ろうとした(空っぽな)test.tgzはそのままtest.tgzとして作られる。
+
+意図的に test.tgz.~1~ を消さない限りは、まともなのが１つは残るはず。
+
+
+●そもそも通常時に backup オプション使っても正常に保存できるよね？
+
+$ touch aaa bbb
+$ tar zcpvf test.tgz aaa bbb
+$ rm aaa bbb
+$ touch ccc ddd
+$ tar --backup=t -zcpvf test1.tgz ccc ddd
+　　→普通にtest1.tgzができた
+
+この状態でtest.tgz（aaa,bbbが入ってるやつ）に上書きしようとする。
+$ tar --backup=t -zcpvf test.tgz ccc ddd
+ccc
+ddd
+名前を `test.tgz' から `test.tgz.~1~' に変更します
+
+$ less test.tgz.~1~
+"test.tgz.\~1\~" may be a binary file.  See it anyway?
+
+　→バイナリファイルと言わなくするの何とかならない？
+　　ファイル名変えたらいける？
+
+$ mv test.tgz.~1~ restore.tgz
+
+$ less restore.tgz
+---------------------------------
+-rw-rw-r-- staff/staff       0 2016-06-12 16:06 aaa
+-rw-rw-r-- staff/staff       0 2016-06-12 16:06 bbb
+---------------------------------
+　→見れた
+
+
+■■■　まとめ　■■■
+
+・ファイル圧縮を手動で実行する時は
+　tar --backup=t -zcpvf 圧縮後のファイル名 圧縮するファイル名
+　とした方が安全かもしれない。
+
+・backupオプションによってリネームされたファイル(.tgz)の
+　中身をlessで確認したい時は、aaa.tgz とか適当な名前に
+　リネームすれば見られる。
