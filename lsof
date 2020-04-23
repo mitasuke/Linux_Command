@@ -1,0 +1,68 @@
+＜参考＞
+http://qiita.com/yusabana/items/fd03ee4c90a0d1e0a8c6
+http://qiita.com/nntsugu@github/items/3e492f1ea164568ae259
+http://www.atmarkit.co.jp/ait/articles/1510/05/news014.html
+
+
+どのファイルをどのプロセスが掴んでいるのかわかる。
+
+
+●ポート番号を指定して、そのポート経由でつなぐプロセスが
+　開いているファイルを表示させる。
+
+# lsof -i:80
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+httpd   5916 root    4u  IPv6 204838      0t0  TCP *:http (LISTEN)
+httpd   5918  www    4u  IPv6 204838      0t0  TCP *:http (LISTEN)
+httpd   5919  www    4u  IPv6 204838      0t0  TCP *:http (LISTEN)
+
+# lsof -i:443
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+httpd   5916 root    6u  IPv6 204842      0t0  TCP *:https (LISTEN)
+httpd   5918  www    6u  IPv6 204842      0t0  TCP *:https (LISTEN)
+httpd   5919  www    6u  IPv6 204842      0t0  TCP *:https (LISTEN)
+
+
+●特定のプロセスIDのプロセスが開いているファイルを表示させる。
+
+root      1284  0.0  0.1  80900  3432 ?        Ss   Dec12   0:01 /usr/libexec/postfix/master
+
+　→postfixのmasterプロセス
+
+# lsof -p 1284
+COMMAND  PID USER   FD   TYPE             DEVICE SIZE/OFF   NODE NAME
+master  1284 root  cwd    DIR              253,5     4096    540 /var/spool/postfix
+master  1284 root  rtd    DIR              253,1     4096      2 /
+master  1284 root  txt    REG              253,4   155976   7178 /usr/libexec/postfix/master
+master  1284 root  mem    REG              253,1    65960    124 /lib64/libnss_files-2.12.so
+master  1284 root  mem    REG              253,1   124640    304 /lib64/libselinux.so.1
+master  1284 root  mem    REG              253,1    12592   5355 /lib64/libkeyutils.so.1.3
+～～省略～～
+
+
+●特定のユーザで実行されているプロセスが開いているファイルを
+　表示させる。
+
+# lsof -u www
+
+　→wwwユーザで実行されているプロセスが開いているファイルを
+　　表示できる。
+
+
+●大きなファイルを消してもディスク使用量が回復しない場合
+
+何かプロセスがファイルを掴みっぱなしだと、ファイルを消しても
+空き容量が増えないことがある。
+
+lsof で deleted になっているファイルを引っ掛けて、
+対象ファイルを掴んでいるプロセスを潰せば何とかなるかも。
+
+# lsof | grep delete
+httpd      5916    root   13w      REG              253,4        0     263275 /usr/local/httpd/logs/ssl_mutex (deleted)
+httpd      5918     www   13w      REG              253,4        0     263275 /usr/local/httpd/logs/ssl_mutex (deleted)
+
+こんな風に表示されるので、該当のプロセスを潰す。
+（kill とか OS再起動 とか サービス再起動 とか）
+
+そうやって、プロセスからファイルを解放してやると、
+ディスク使用率も減るはず。
