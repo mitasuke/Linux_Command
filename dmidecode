@@ -1,0 +1,9 @@
+機器のシリアルを確認したい時に便利かも。
+# dmidecode
+
+Handle 0x0028, DMI type 1, 27 bytes
+System Information
+Manufacturer: IBM
+Product Name: System x3550 M2 -[7946PAB]-
+Version: 00
+Serial Number: xxxxxxxxx ★ここ
