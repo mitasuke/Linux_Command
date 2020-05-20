@@ -10,3 +10,7 @@ openssl s_client -connect <対象のIPアドレス・サイト名など>:443 -tl
 openssl genrsa -out key.pem 2048 
 openssl req -new -key key.pem -out csr
 openssl x509 -req -in csr -signkey key.pem -sha256 -days 3650 -out cert.pem
+
+
+別サーバから証明書の有効期限を確認する方法
+openssl s_client -connect サイト名:443 | openssl x509 -noout -enddate
