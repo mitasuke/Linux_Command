@@ -4,3 +4,6 @@
 直近1カ月分のファイルを残し、それ以外は適当な場所に退避
 cd /data/file
 find . -type f -mtime +31 -exec mv {} /data/backup \;
+
+条件に合うファイル一覧をタイムスタンプ付きで見る場合
+find . -type f -mtime +31 -ls
