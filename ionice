@@ -16,3 +16,7 @@ none: prio 0
 確認
 # ionice -p 17575
 idle
+
+
+niceコマンドと組み合わせてプロセスの実行優先度およびI/O優先度を最低にしてコマンドを実行する場合
+# nice -n 19 ionice -c 2 -n 7 コマンド
