@@ -7,3 +7,23 @@ find . -type f -mtime +31 -exec mv {} /data/backup \;
 
 条件に合うファイル一覧をタイムスタンプ付きで見る場合
 find . -type f -mtime +31 -ls
+
+
+例：
+「～.zone」という名前のファイルを /etc ディレクトリ配下から検索する。
+# find /etc/ -name *.zone
+
+参考：https://hydrocul.github.io/wiki/commands/find.html
+
+※検索対象をファイルに限定したい時は「-type f」オプションをつける。
+※検索対象をディレクトリに限定したい時は「-type d」オプションをつける。
+
+※ファイルに設定されているパーミッションを条件として検索したい場合は、
+　-permオプションをつけて検索する。
+
+　ユーザに対する読み込み権限があるファイル：「-perm -u=r」
+　ユーザに対する書き込み権限があるファイル：「-perm -u=w」
+　ユーザに対する実行権限があるファイル　　：「-perm -u=x」
+
+うまいこといかない時はこうする。（. と * の前にバックスラッシュをつける）
+$ find /home/test -name \*\.dump
