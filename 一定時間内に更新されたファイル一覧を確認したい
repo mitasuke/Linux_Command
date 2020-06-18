@@ -1,7 +1,0 @@
-今から15分前以内に更新されたファイル一覧を見たい時。（ルートディレクトリ以下のもの全部が対象）
-# find / -mmin -15 -type f
-
-膨大な量が表示されることが多いので、別のファイルに出力させておいた方が良いかもしれない。
-# find / -mmin -15 -type f > /tmp/newfiles.txt
-# less /tmp/newfiles.txt
-
