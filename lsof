@@ -62,7 +62,7 @@ httpd      5916    root   13w      REG              253,4        0     263275 /u
 httpd      5918     www   13w      REG              253,4        0     263275 /usr/local/httpd/logs/ssl_mutex (deleted)
 
 こんな風に表示されるので、該当のプロセスを潰す。
-（kill とか OS再起動 とか サービス再起動 とか）
+（kill とか kill -HUP PID とか OS再起動 とか サービス再起動 とか）
 
 そうやって、プロセスからファイルを解放してやると、
 ディスク使用率も減るはず。
