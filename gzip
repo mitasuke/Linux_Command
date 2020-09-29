@@ -1,2 +1,0 @@
-ファイルを圧縮させながら別の場所に吐き出させる。
-cat error_log | gzip -9 >> /tmp/error_log.zip
